@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express from 'express'
-import { indexRoutes } from './routes/index.routes'
+import { eventRoutes } from './routes/event-routes'
 
 const PORT = 4000
 const app = express()
@@ -8,5 +8,5 @@ const app = express()
 app
   .use(express.json())
   .use(cors())
-  .use(indexRoutes)
+  .use(eventRoutes)
   .listen(PORT, () => console.log(`server running at http://localhost:${PORT}`))
