@@ -12,6 +12,6 @@ export class DeleteDataController {
     this._accountRepository.deleteAllAccounts()
     this._eventRepository.deleteAllEvents()
 
-    return response.status(200).send()
+    return response.status(200).send('OK')
   }
 }
