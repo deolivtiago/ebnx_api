@@ -1,9 +1,15 @@
 import { Deposit } from '../entities/deposit'
 import { Event } from '../entities/event'
+import { Withdraw } from '../entities/withdraw'
 
 interface DepositData {
   amount: number
   destination: string
+}
+
+interface WithdrawData {
+  amount: number
+  origin: string
 }
 
 export class InMemoryEventRepository {
@@ -22,6 +28,17 @@ export class InMemoryEventRepository {
   createDeposit ({ amount, destination }: DepositData): Event {
     const event = new Deposit(
       destination,
+      amount
+    )
+
+    this._events.push(event)
+
+    return event
+  }
+
+  createWithdraw ({ amount, origin }: WithdrawData): Event {
+    const event = new Withdraw(
+      origin,
       amount
     )
 
