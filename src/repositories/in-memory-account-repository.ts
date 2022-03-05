@@ -1,7 +1,17 @@
 import { Account } from '../entities/account'
 
 export class InMemoryAccountRepository {
-  constructor (private readonly _accounts: Account[] = []) { }
+  private constructor (private readonly _accounts: Account[] = []) { }
+
+  public static INSTANCE: InMemoryAccountRepository
+
+  public static getInstance (): InMemoryAccountRepository {
+    if (!InMemoryAccountRepository.INSTANCE) {
+      InMemoryAccountRepository.INSTANCE = new InMemoryAccountRepository()
+    }
+
+    return InMemoryAccountRepository.INSTANCE
+  }
 
   createAccount (id?: string): Account {
     const nextId = this._accounts.length + 1
@@ -24,5 +34,11 @@ export class InMemoryAccountRepository {
     }
 
     return account
+  }
+
+  deleteAllAccounts (): void {
+    while (this._accounts.length) {
+      this._accounts.pop()
+    }
   }
 }

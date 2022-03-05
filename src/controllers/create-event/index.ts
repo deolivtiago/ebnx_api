@@ -3,8 +3,8 @@ import { InMemoryEventRepository } from '../../repositories/in-memory-event-repo
 import { CreateDepositUsecase } from '../../usecases/create-deposit-usecase'
 import { CreateEventController } from './create-event-controller'
 
-const accountRepository = new InMemoryAccountRepository()
-const eventRepository = new InMemoryEventRepository()
+const accountRepository = InMemoryAccountRepository.getInstance()
+const eventRepository = InMemoryEventRepository.getInstance()
 
 const createDepositUsecase = new CreateDepositUsecase(eventRepository, accountRepository)
 

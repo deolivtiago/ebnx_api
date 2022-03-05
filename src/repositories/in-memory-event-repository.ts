@@ -7,7 +7,17 @@ interface DepositData {
 }
 
 export class InMemoryEventRepository {
-  constructor (private readonly _events: Event[] = []) { }
+  private constructor (private readonly _events: Event[] = []) { }
+
+  public static INSTANCE: InMemoryEventRepository
+
+  public static getInstance (): InMemoryEventRepository {
+    if (!InMemoryEventRepository.INSTANCE) {
+      InMemoryEventRepository.INSTANCE = new InMemoryEventRepository()
+    }
+
+    return InMemoryEventRepository.INSTANCE
+  }
 
   createDeposit ({ amount, destination }: DepositData): Event {
     const event = new Deposit(
@@ -18,5 +28,11 @@ export class InMemoryEventRepository {
     this._events.push(event)
 
     return event
+  }
+
+  deleteAllEvents (): void {
+    while (this._events.length) {
+      this._events.pop()
+    }
   }
 }
