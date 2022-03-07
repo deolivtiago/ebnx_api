@@ -1,3 +1,4 @@
+import { NotFoundError } from '../errors/not-found-error'
 import { InMemoryAccountRepository } from '../repositories/in-memory-account-repository'
 import { InMemoryEventRepository } from '../repositories/in-memory-event-repository'
 
@@ -18,7 +19,7 @@ export class CreateTransferUsecase {
     let destinationAccount = this._accountRepository.getAccount(destination)
 
     if (!originAccount) {
-      return -1
+      throw new NotFoundError('origin')
     }
 
     if (!destinationAccount) {
@@ -30,6 +31,6 @@ export class CreateTransferUsecase {
     const updatedOrigin = this._accountRepository.updateAccountBalance(origin, originAccount.balance - amount)
     const updatedDestination = this._accountRepository.updateAccountBalance(destination, destinationAccount.balance + amount)
 
-    return Object.assign({}, { origin: updatedOrigin, destination: updatedDestination })
+    return { origin: updatedOrigin, destination: updatedDestination }
   }
 }

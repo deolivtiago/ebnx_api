@@ -1,3 +1,4 @@
+import { NotFoundError } from '../errors/not-found-error'
 import { InMemoryAccountRepository } from '../repositories/in-memory-account-repository'
 import { InMemoryEventRepository } from '../repositories/in-memory-event-repository'
 
@@ -16,12 +17,12 @@ export class CreateWithdrawUsecase {
     const account = this._accountRepository.getAccount(origin)
 
     if (!account) {
-      return -1
+      throw new NotFoundError('origin')
     }
 
     this._eventRepository.createWithdraw({ origin, amount })
     const updatedOrigin = this._accountRepository.updateAccountBalance(origin, account.balance - amount)
 
-    return Object.assign({}, { origin: updatedOrigin })
+    return { origin: updatedOrigin }
   }
 }

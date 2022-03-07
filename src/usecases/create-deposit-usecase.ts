@@ -16,13 +16,12 @@ export class CreateDepositUsecase {
     let account = this._accountRepository.getAccount(destination)
 
     if (!account) {
-      this._accountRepository.createAccount(destination)
-      account = this._accountRepository.getAccount(destination)
+      account = this._accountRepository.createAccount(destination)
     }
 
     this._eventRepository.createDeposit({ destination, amount })
     const updatedDestination = this._accountRepository.updateAccountBalance(destination, amount + account.balance)
 
-    return Object.assign({}, { destination: updatedDestination })
+    return { destination: updatedDestination }
   }
 }

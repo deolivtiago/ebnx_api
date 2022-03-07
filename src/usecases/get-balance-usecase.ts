@@ -1,3 +1,4 @@
+import { NotFoundError } from '../errors/not-found-error'
 import { InMemoryAccountRepository } from '../repositories/in-memory-account-repository'
 
 export class GetBalanceUsecase {
@@ -7,7 +8,7 @@ export class GetBalanceUsecase {
     const account = this._accountRepository.getAccount(id)
 
     if (!account) {
-      return -1
+      throw new NotFoundError('account')
     }
 
     return account.balance
